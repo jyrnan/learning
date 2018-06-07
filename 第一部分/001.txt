@@ -1,0 +1,5 @@
+Starting the server
+
+Starting an uWSGI server is the role of the system administrator, like starting the Web server. It should not be the role of the Web server to start the uWSGI server – though you can also do that if it fits your architecture.
+
+How to best start uWSGI services at boot depends on the operating system you use.
