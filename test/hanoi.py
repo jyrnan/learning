@@ -11,6 +11,6 @@ def hanoi(n, x, y, z):
 		hanoi((n-1), y, x, z)
 		
 	return step
-step = hanoi(5, 'x', 'y', 'z')
+step = hanoi(6, 'x', 'y', 'z')
 print(len(step))
 
