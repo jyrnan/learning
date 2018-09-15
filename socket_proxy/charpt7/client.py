@@ -1,11 +1,11 @@
 #!user/bin/env python3
 
-import argparse, random, socket, 7_1_server
+import argparse, random, socket, zen_utils
 
 def client(address, cause_error=False):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(address)
-    aphorisms = list(7_1_server.aphorisms)
+    aphorisms = list(zen_utils.aphorisms)
     if cause_error:
         sock.sendall(aphorisms[0][:-1])
         return
