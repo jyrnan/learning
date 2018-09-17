@@ -2,15 +2,16 @@
 
 import argparse, socket, time
 
-aphorism = {b'Beautiful is better than?' : b'Ugly.',
-			b'Explicit is better than?' : b'Implicit.'
-			b'Simple is better than?' : b'Complex.'
-}
+aphorisms = {b'Beautiful is better than?': b'Ugly.',
+			b'Explicit is better than?': b'Implicit.',
+			b'Simple is better than?': b'Complex.'}
+
 
 def get_answer(aphorism):
 	
 	time.sleep(0.0) # increase to simulate an expensive operation
-	return aphorism.get(aphorism, b'Error: unknow aphorism.')
+	return aphorisms.get(aphorism, b'Error: unknow aphorism.')
+
 	
 def parse_command_line(description):
 	
@@ -21,6 +22,7 @@ def parse_command_line(description):
 	address = (args.host, args.p)
 	return address
 
+
 def create_srv_socket(address):
 	"""build and return a listening server socket"""
 	listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,6 +32,7 @@ def create_srv_socket(address):
 	print('Listening at {}'.format(address))
 	return listener
 
+
 def accept_connections_forever(listener):
 	"""Forever answer income connections on a listening socket."""
 	while True:
@@ -37,32 +40,38 @@ def accept_connections_forever(listener):
 		print('Accepted connection from {}'.format(address))
 		handle_conversation(sock, address)
 
+
 def handle_conversation(sock, address):
 	"""`converse with a client over 'sock' untill they are done talking"""
 	try:
 		while True:
 			handle_request(sock)
 	except EOFError:
-		print('Client soket to {} has closed'.format(address))
+		print('Client socket to {} has closed'.format(address))
 	except Exception as e:
 		print('Client {} error {}'.format(address, e))
 	finally:
 		sock.close()
 
+
 def handle_request(sock):
 	"""recieve a sigle client request on 'sock' and the answer"""
-	aporism = recv_until(sock, b'?')
+	aphorism = recv_until(sock, b'?')
+	# print('aphorism is: ', aphorism) # added by myself for testing
 	answer = get_answer(aphorism)
+	# print('anwser is :', answer) # added by myself for testing
 	sock.sendall(answer)
+
 
 def recv_until(sock, suffix):
 	"""recive bytes over socket 'sock' until we receive the 'suffix'. """
 	message = sock.recv(4096)
+	# print(message) # added by myself for testing
 	if not message:
 		raise EOFError('socket closed')
-	while not message.endwith('suffix'):
+	while not message.endswith(suffix):
 		data = sock.recv(4096)
 		if not data:
 			raise IOError('recived {!r} then socket closed'.format(message))
 		message += data
-		return message
+	return message

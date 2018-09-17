@@ -9,15 +9,18 @@ def client(address, cause_error=False):
     if cause_error:
         sock.sendall(aphorisms[0][:-1])
         return
-    for aphorism in random.sample(aphorisms, 3)
+    for aphorism in random.sample(aphorisms, 3):
+        # print(aphorism) # added by myself for testing
         sock.sendall(aphorism)
+        # print('sent ok') # added by myself for testing
         print(aphorism, zen_utils.recv_until(sock, b'.'))
     sock.close()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Example client')
     parser.add_argument('host', help='IP or hostname')
-    parser.add_argument('-e', action='Store_true', help='Cause an error')
+    parser.add_argument('-e', action='store_true', help='Cause an error')
     parser.add_argument('-p', metavar='port', type=int, default=1060, help='TCP port(default 1060)')
     args =parser.parse_args()
     address = (args.host, args.p)
