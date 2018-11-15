@@ -1,7 +1,7 @@
 from stack import Stack
 
 def parchecker(symbolstring):
-    s = Stack
+    s = Stack()
     balenced = True
     index = 0
     while index < len(symbolstring) and balenced:
