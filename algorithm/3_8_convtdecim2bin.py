@@ -1,4 +1,4 @@
-from stack import Stack
+from myds import Stack
 
 def devideby2(decnum):
     remstack = Stack()

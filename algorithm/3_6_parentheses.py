@@ -1,4 +1,4 @@
-from stack import Stack
+from myds import Stack
 
 def parchecker(symbolstring):
     s = Stack()
